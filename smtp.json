@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1750562630895",
+    "host": "smtp.office365.com",
+    "port": "587",
+    "user": "franco.abrajan@jaliscoedu.mx",
+    "password": "Fr@bol27"
+  },
+  {
+    "id": "1750564470510",
+    "host": "smtp.office365.com",
+    "port": "587",
+    "user": "323230010@sha.edu.eg",
+    "password": "30306011315174"
+  },
+  {
+    "id": "1750564538977",
+    "host": "smtp.office365.com",
+    "port": "587",
+    "user": "Najwa20025@privatemoe.ae",
+    "password": "Naj#R222"
+  }
+]
