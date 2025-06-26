@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const path = require('path');
+const { authenticate } = require('../middleware/auth');
 
-// Main page route
-router.get('/', (req, res) => {
+// Main page route - requires authentication
+router.get('/', authenticate, (req, res) => {
   // Read saved SMTP configurations
   const smtpFilePath = path.join(__dirname, '..', 'smtp.json');
   let smtpConfigs = [];
@@ -12,7 +13,12 @@ router.get('/', (req, res) => {
   try {
     if (fs.existsSync(smtpFilePath)) {
       const smtpData = fs.readFileSync(smtpFilePath, 'utf8');
-      smtpConfigs = JSON.parse(smtpData).map(config => {
+      const allConfigs = JSON.parse(smtpData);
+      
+      // Filter configurations to only show those belonging to the current user
+      const userConfigs = allConfigs.filter(config => config.userId === req.session.userId);
+      
+      smtpConfigs = userConfigs.map(config => {
         // Don't send passwords to frontend
         return {
           id: config.id,
@@ -28,8 +34,10 @@ router.get('/', (req, res) => {
   }
   
   res.render('index', { 
-    title: 'Inderman Mailer v1.0',
-    smtpConfigs: smtpConfigs
+    title: 'Inderman Mailer',
+    smtpConfigs: smtpConfigs,
+    currentUser: req.session.username,
+    userId: req.session.userId
   });
 });
 

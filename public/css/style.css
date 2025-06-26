@@ -38,6 +38,49 @@ body {
     align-items: center;
 }
 
+/* User Info Styles */
+.user-info {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px solid var(--terminal-border);
+}
+
+.user-avatar {
+    font-size: 1.5rem;
+    color: var(--terminal-cyan);
+    margin-right: 10px;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.username {
+    font-weight: bold;
+    color: var(--terminal-text);
+    margin-bottom: 3px;
+    font-size: 0.9rem;
+}
+
+.btn-terminal-danger {
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid var(--terminal-red);
+    color: var(--terminal-red);
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.btn-terminal-danger:hover {
+    background-color: rgba(255, 0, 0, 0.4);
+    color: #fff;
+}
+
 .terminal-header h1 {
     font-size: 1.2rem;
     margin: 0;
@@ -252,6 +295,151 @@ body {
 
 .table tbody tr:hover {
     background-color: rgba(0, 255, 255, 0.1);
+}
+
+/* Drag and Drop styles */
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr.dragging {
+    opacity: 0.5;
+    background-color: rgba(0, 255, 255, 0.2);
+}
+
+.table tbody tr.drag-over {
+    border-top: 2px solid var(--terminal-green);
+}
+
+.table tbody tr.drag-active {
+    cursor: move;
+}
+
+.drag-handle {
+    color: var(--terminal-cyan);
+    display: inline-block;
+    opacity: 0.7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.table tbody tr:hover .drag-handle {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* SMTP List Styles */
+.smtp-list {
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #111;
+    border: 1px solid #333;
+    border-radius: 4px;
+}
+
+.smtp-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #333;
+    transition: background-color 0.2s;
+}
+
+.smtp-item:last-child {
+    border-bottom: none;
+}
+
+.smtp-item:hover {
+    background-color: #222;
+}
+
+.smtp-info {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #0f0;
+    font-family: 'Fira Code', monospace;
+}
+
+.smtp-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.smtp-actions button {
+    padding: 2px 6px;
+    font-size: 0.8rem;
+}
+
+.smtp-select {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.smtp-select.selected {
+    background-color: #0f0;
+    color: #000;
+}
+
+.smtp-select.selected i {
+    color: #000;
+}
+
+.smtp-verify {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.smtp-verify.verifying {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.smtp-verify.success {
+    background-color: #00cc00;
+    color: #000;
+    border-color: #00cc00;
+}
+
+.smtp-verify.failure {
+    background-color: #ff0000;
+    color: #fff;
+    border-color: #ff0000;
+}
+
+.smtp-delete {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.smtp-empty {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .smtp-item {
+        padding: 10px 8px;
+    }
+    
+    .smtp-actions button {
+        padding: 8px;
+        min-width: 40px;
+        height: 40px;
+    }
 }
 
 /* Email table container with scrolling */

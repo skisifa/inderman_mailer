@@ -1,23 +1,18 @@
 [
   {
-    "id": "1750562630895",
+    "id": "1750900791675",
     "host": "smtp.office365.com",
     "port": "587",
-    "user": "franco.abrajan@jaliscoedu.mx",
-    "password": "Fr@bol27"
+    "user": "2003080500245@ofppt-edu.ma",
+    "password": "CD945649@",
+    "userId": "84411bde-1e19-4954-ba21-7e5a85450206"
   },
   {
-    "id": "1750564470510",
-    "host": "smtp.office365.com",
+    "id": "1750901102170",
+    "host": "smtp-mail.outlook.com",
     "port": "587",
-    "user": "323230010@sha.edu.eg",
-    "password": "30306011315174"
-  },
-  {
-    "id": "1750564538977",
-    "host": "smtp.office365.com",
-    "port": "587",
-    "user": "Najwa20025@privatemoe.ae",
-    "password": "Naj#R222"
+    "user": "valentin.pisau@student.unitbv.ro",
+    "password": "26022003v03A",
+    "userId": "cd062120-5038-4b9d-b8cb-203abd9883a5"
   }
 ]

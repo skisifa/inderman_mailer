@@ -1,0 +1,38 @@
+[
+  {
+    "id": "admin",
+    "username": "admin",
+    "password": "admin123",
+    "isAdmin": true,
+    "lastLogin": "2025-06-26T01:21:54.553Z",
+    "lastIP": "127.0.0.1",
+    "online": false,
+    "note": "Default administrator account",
+    "emailCache": [],
+    "city": "Unknown"
+  },
+  {
+    "id": "84411bde-1e19-4954-ba21-7e5a85450206",
+    "username": "skisifa",
+    "password": "0072013",
+    "isAdmin": false,
+    "lastLogin": "2025-06-26T01:21:27.998Z",
+    "lastIP": "127.0.0.1",
+    "online": false,
+    "note": "aguvuhiabsnmfd",
+    "emailCache": 0,
+    "city": "Unknown"
+  },
+  {
+    "id": "cd062120-5038-4b9d-b8cb-203abd9883a5",
+    "username": "inderman",
+    "password": "12345",
+    "isAdmin": false,
+    "lastLogin": "2025-06-26T01:26:33.732Z",
+    "lastIP": "127.0.0.1",
+    "online": true,
+    "note": "adjhgva kjhsbad aljhkb laikjdb akdjhbak jdb alkdbvlakd",
+    "emailCache": 1,
+    "city": "Unknown"
+  }
+]

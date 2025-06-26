@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin-theme.css">
+</head>
+<body class="admin-theme">
+  <!-- Header -->
+  <header class="terminal-header">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="terminal-title">
+          <div class="terminal-controls">
+            <span class="control red"></span>
+            <span class="control yellow"></span>
+            <span class="control green"></span>
+          </div>
+          <h1><i class="fas fa-terminal"></i> Inderman Mailer Admin</h1>
+        </div>
+        <div class="terminal-user">
+          Logged in as: <span class="fw-bold"><%= currentUser %></span>
+          <a href="/logout" class="btn btn-sm btn-danger ms-2">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <div class="container terminal-content">
+    <!-- Back Button -->
+    <div class="mb-4">
+      <a href="/admin" class="btn btn-info">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+    
+    <!-- User Info -->
+    <div class="terminal-card">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>
+            <i class="fas fa-user"></i> <%= user.username %>
+            <% if (user.isAdmin) { %>
+              <span class="badge bg-warning text-dark">Admin</span>
+            <% } %>
+          </h3>
+          
+          <div class="user-info-item">
+            <span class="user-info-label">Status:</span>
+            <span id="userStatus" class="<%= user.online ? 'text-success' : 'text-danger' %>">
+              <%= user.online ? 'Online' : 'Offline' %>
+            </span>
+          </div>
+          
+          <div class="user-info-item">
+            <span class="user-info-label">Last Login:</span>
+            <span class="user-info-value">
+              <%= user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'Never' %>
+            </span>
+          </div>
+          
+          <div class="user-info-item">
+            <span class="user-info-label">Note:</span>
+            <span class="user-info-value">
+              <%= user.note || 'No notes' %>
+            </span>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="user-info-item">
+            <span class="user-info-label">User ID:</span>
+            <span class="user-info-value"><%= user.id %></span>
+          </div>
+          
+          <div class="user-info-item">
+            <span class="user-info-label">IP Address:</span>
+            <span class="user-info-value"><%= user.lastIP || 'Unknown' %></span>
+          </div>
+          
+          <div class="user-info-item">
+            <span class="user-info-label">Location:</span>
+            <span class="user-info-value">
+              <% if (user.countryCode) { %>
+                <img src="https://flagcdn.com/16x12/<%= user.countryCode.toLowerCase() %>.png" 
+                     alt="<%= user.country %>" class="me-1">
+              <% } %>
+              <%= user.country || 'Unknown' %>
+            </span>
+          </div>
+          
+          <div class="user-info-item">
+            <span class="user-info-label">Email Cache:</span>
+            <button id="downloadEmailsBtn" class="btn btn-sm btn-outline-success">
+              <i class="fas fa-download"></i> Download & Clear
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tabs -->
+    <ul class="terminal-tabs" id="userTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="logs-tab" data-bs-toggle="tab" data-bs-target="#logs" type="button" role="tab" aria-controls="logs" aria-selected="true">
+          <i class="fas fa-terminal"></i> Live Logs
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="smtp-tab" data-bs-toggle="tab" data-bs-target="#smtp" type="button" role="tab" aria-controls="smtp" aria-selected="false">
+          <i class="fas fa-server"></i> SMTP Credentials
+        </button>
+      </li>
+    </ul>
+    
+    <div class="terminal-tab-content" id="userTabsContent">
+      <!-- Live Logs Tab -->
+      <div class="tab-pane fade show active" id="logs" role="tabpanel" aria-labelledby="logs-tab">
+        <div class="d-flex justify-content-between mb-2">
+          <h5 class="terminal-heading">
+            <i class="fas fa-terminal"></i> Live Terminal
+          </h5>
+          <div>
+            <button id="toggleLogsBtn" class="btn btn-sm btn-warning">
+              <i class="fas fa-pause"></i> Pause Live Logs
+            </button>
+            <button id="clearLogsBtn" class="btn btn-sm btn-danger">
+              <i class="fas fa-trash"></i> Clear
+            </button>
+          </div>
+        </div>
+        
+        <div id="terminal-logs" class="terminal-console">
+          <div class="log-entry log-info">
+            <span class="log-timestamp">[<%= new Date().toLocaleTimeString() %>]</span> Loading logs for user: <%= user.username %>
+          </div>
+        </div>
+      </div>
+      
+      <!-- SMTP Tab -->
+      <div class="tab-pane fade" id="smtp" role="tabpanel" aria-labelledby="smtp-tab">
+        <h5 class="terminal-heading mb-3">
+          <i class="fas fa-server"></i> SMTP Configurations
+        </h5>
+        
+        <div class="table-responsive">
+          <table class="terminal-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Host</th>
+                <th>Port</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>SSL/TLS</th>
+              </tr>
+            </thead>
+            <tbody id="smtpTableBody">
+              <!-- SMTP configurations will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+        
+        <div id="noSmtpMessage" class="terminal-alert">
+          <i class="fas fa-info-circle"></i> No SMTP configurations found for this user.
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    // Initialize with user ID
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set selected user ID
+      selectedUserId = '<%= user.id %>';
+      
+      // Load user logs
+      loadUserLogs(selectedUserId);
+      
+      // Load SMTP configurations
+      fetch(`/admin/api/users/${selectedUserId}`)
+        .then(response => response.json())
+        .then(userData => {
+          const smtpTableBody = document.getElementById('smtpTableBody');
+          const noSmtpMessage = document.getElementById('noSmtpMessage');
+          
+          if (userData.smtps && userData.smtps.length > 0) {
+            smtpTableBody.innerHTML = '';
+            noSmtpMessage.style.display = 'none';
+            
+            userData.smtps.forEach(smtp => {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td>${smtp.name || 'Unnamed'}</td>
+                <td>${smtp.host}</td>
+                <td>${smtp.port}</td>
+                <td>${smtp.user}</td>
+                <td><span class="password-display">${smtp.password}</span></td>
+                <td>${smtp.secure ? 'Yes' : 'No'}</td>
+              `;
+              smtpTableBody.appendChild(tr);
+            });
+          } else {
+            smtpTableBody.innerHTML = '';
+            noSmtpMessage.style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Error loading SMTP data:', error);
+          addLogMessage(`[!] Error loading SMTP data: ${error.message}`, 'error');
+        });
+    });
+  </script>
+</body>
+</html>

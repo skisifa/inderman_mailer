@@ -1,0 +1,824 @@
+/* Admin Panel Terminal Theme - Kali Linux Inspired */
+/* Updated with enhanced terminal modal controls and modern UI */
+:root {
+  --terminal-bg: #121212;
+  --terminal-text: #1ed760; /* Softer green for better readability */
+  --terminal-header: #1e1e1e;
+  --terminal-border: #2a2a2a;
+  --terminal-success: #1ed760;
+  --terminal-error: #ff5252;
+  --terminal-warning: #ffcb2b;
+  --terminal-info: #42a5f5;
+  --terminal-prompt: #1ed760;
+  --terminal-cursor: #ffffff;
+  --terminal-selection: rgba(30, 215, 96, 0.3);
+  --terminal-card-bg: rgba(30, 30, 30, 0.7);
+  --terminal-accent: #8c52ff; /* Purple accent color */
+  --terminal-gradient-start: #121212;
+  --terminal-gradient-end: #1a1a1a;
+}
+
+body.admin-theme {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: 'Fira Code', 'Courier New', monospace;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.admin-theme .container-fluid {
+  padding: 0;
+}
+
+/* Terminal Header */
+.admin-theme .terminal-header {
+  background-color: var(--terminal-header);
+  border-bottom: 1px solid var(--terminal-border);
+  padding: 10px 15px;
+  position: relative;
+}
+
+.admin-theme .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-theme .terminal-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-theme .control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.admin-theme .control.red {
+  background-color: #ff5f56;
+}
+
+.admin-theme .control.yellow {
+  background-color: #ffbd2e;
+}
+
+.admin-theme .control.green {
+  background-color: #27c93f;
+}
+
+.admin-theme h1 {
+  color: var(--terminal-text);
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.admin-theme .version {
+  font-size: 0.8rem;
+  color: #888;
+  margin-left: 10px;
+}
+
+/* Terminal Body */
+.admin-theme .terminal-body {
+  padding: 15px;
+}
+
+/* Terminal Sections */
+.admin-theme .terminal-section {
+  background-color: var(--terminal-card-bg);
+  border: 1px solid var(--terminal-border);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.admin-theme .terminal-section:hover {
+  box-shadow: 0 6px 16px rgba(30, 215, 96, 0.15);
+  border-color: rgba(30, 215, 96, 0.3);
+}
+
+.admin-theme .section-header {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 8px 15px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--terminal-border);
+  color: var(--terminal-text);
+}
+
+.admin-theme .section-content {
+  padding: 15px;
+}
+
+/* Terminal Inputs */
+.admin-theme .form-control.terminal-input {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--terminal-border);
+  color: var(--terminal-text);
+  padding: 8px 12px;
+}
+
+.admin-theme .form-control.terminal-input:focus {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-color: var(--terminal-text);
+  box-shadow: 0 0 0 0.25rem rgba(0, 255, 0, 0.25);
+  color: var(--terminal-text);
+}
+
+/* Terminal Buttons */
+.admin-theme .btn-primary {
+  background-color: #0066cc;
+  border-color: #0059b3;
+}
+
+.admin-theme .btn-success {
+  background-color: #006600;
+  border-color: #004d00;
+}
+
+.admin-theme .btn-danger {
+  background-color: #990000;
+  border-color: #800000;
+}
+
+.admin-theme .btn-warning {
+  background-color: #cc7a00;
+  border-color: #b36b00;
+  color: #fff;
+}
+
+.admin-theme .btn-info {
+  background-color: #006666;
+  border-color: #004d4d;
+  color: #fff;
+}
+
+.admin-theme .btn-outline-success {
+  color: var(--terminal-success);
+  border-color: var(--terminal-success);
+}
+
+.admin-theme .btn-outline-danger {
+  color: var(--terminal-error);
+  border-color: var(--terminal-error);
+}
+
+.admin-theme .btn-outline-warning {
+  color: var(--terminal-warning);
+  border-color: var(--terminal-warning);
+}
+
+.admin-theme .btn-outline-info {
+  color: var(--terminal-info);
+  border-color: var(--terminal-info);
+}
+
+/* Terminal Console */
+.admin-theme .terminal-console {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: 'Fira Code', 'Courier New', monospace;
+  padding: 15px;
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--terminal-border);
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.admin-theme .terminal-console::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(to bottom, rgba(18, 18, 18, 0.8), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.admin-theme .terminal-console::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(to top, rgba(18, 18, 18, 0.8), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Terminal Logs */
+.admin-theme .terminal-logs {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--terminal-border);
+  border-radius: 5px;
+  padding: 10px;
+  height: 400px;
+  overflow-y: auto;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Log Entries */
+.admin-theme .log-entry {
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  word-break: break-all;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  background-color: rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-theme .log-entry:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: translateX(2px);
+}
+
+.admin-theme .log-timestamp {
+  color: #888;
+  margin-right: 8px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.admin-theme .log-info {
+  color: var(--terminal-info);
+  border-left-color: var(--terminal-info);
+}
+
+.admin-theme .log-success {
+  color: var(--terminal-success);
+  border-left-color: var(--terminal-success);
+}
+
+.admin-theme .log-warning {
+  color: var(--terminal-warning);
+  border-left-color: var(--terminal-warning);
+}
+
+.admin-theme .log-error {
+  color: var(--terminal-error);
+  border-left-color: var(--terminal-error);
+}
+
+.admin-theme .log-entry.info {
+  color: var(--terminal-info);
+}
+
+/* Terminal Tables */
+.admin-theme .terminal-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+  color: var(--terminal-text);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.admin-theme .terminal-table th,
+.admin-theme .terminal-table td {
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid var(--terminal-border);
+  transition: all 0.2s ease;
+  vertical-align: middle;
+}
+
+.admin-theme .terminal-table th {
+  text-align: left;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: var(--terminal-accent);
+  border-bottom: 2px solid var(--terminal-accent);
+  padding: 0.65rem 0.85rem;
+}
+
+.admin-theme .terminal-table tbody tr {
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.admin-theme .terminal-table tbody tr:hover {
+  background-color: rgba(30, 215, 96, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-left: 3px solid var(--terminal-accent);
+}
+
+.admin-theme .terminal-table tbody tr:hover td {
+  border-bottom-color: rgba(30, 215, 96, 0.3);
+}
+
+/* Compact table for better readability */
+.admin-theme .terminal-table.compact th,
+.admin-theme .terminal-table.compact td {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* Table column sizing */
+.admin-theme .terminal-table .col-username {
+  width: 15%;
+}
+
+.admin-theme .terminal-table .col-password {
+  width: 15%;
+}
+
+.admin-theme .terminal-table .col-login {
+  width: 15%;
+}
+
+.admin-theme .terminal-table .col-ip {
+  width: 12%;
+}
+
+.admin-theme .terminal-table .col-country {
+  width: 12%;
+}
+
+.admin-theme .terminal-table .col-note {
+  width: 20%;
+}
+
+.admin-theme .terminal-table .col-actions {
+  width: 11%;
+  text-align: center;
+}
+
+.admin-theme .terminal-table .status-online {
+  color: var(--terminal-success);
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(30, 215, 96, 0.5);
+}
+
+.admin-theme .terminal-table .status-offline {
+  color: #888;
+  font-style: italic;
+}
+
+/* User Status Indicators */
+.admin-theme .status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+/* Admin badge */
+.admin-theme .badge.bg-purple {
+  background-color: var(--terminal-accent) !important;
+  font-size: 0.7rem;
+  padding: 0.25em 0.6em;
+  font-weight: normal;
+}
+
+/* Table action buttons */
+.admin-theme .btn-table-action {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  margin: 0 2px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.admin-theme .btn-table-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.admin-theme .btn-table-action.edit {
+  background-color: var(--terminal-info);
+  border-color: var(--terminal-info);
+}
+
+.admin-theme .btn-table-action.delete {
+  background-color: var(--terminal-error);
+  border-color: var(--terminal-error);
+}
+
+/* Admin user row styling */
+.admin-theme .terminal-table tr.admin-user {
+  background-color: rgba(140, 82, 255, 0.05);
+}
+
+.admin-theme .terminal-table tr.admin-user:hover {
+  background-color: rgba(140, 82, 255, 0.1);
+}
+
+/* Password display styling */
+.admin-theme .password-display {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 3px 8px;
+  display: inline-block;
+  border-left: 3px solid var(--terminal-warning);
+}
+
+.admin-theme .password-display span {
+  font-size: 0.95rem;
+  user-select: all; /* Makes password text easily selectable */
+}
+
+.admin-theme .status-online {
+  background-color: var(--terminal-success);
+  box-shadow: 0 0 5px var(--terminal-success);
+}
+
+.admin-theme .status-offline {
+  background-color: #888;
+}
+
+/* Country Flags */
+.admin-theme .country-flag {
+  width: 20px;
+  height: 15px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Terminal Modals */
+.admin-theme .modal-content {
+  background-color: var(--terminal-bg);
+  border: 1px solid var(--terminal-border);
+  color: var(--terminal-text);
+}
+
+.admin-theme .modal-header {
+  border-bottom: 1px solid var(--terminal-border);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.admin-theme .modal-footer {
+  border-top: 1px solid var(--terminal-border);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.admin-theme .close {
+  color: var(--terminal-text);
+}
+
+/* SMTP List */
+.admin-theme .smtp-credentials {
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 2px;
+}
+
+.admin-theme .smtp-item {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--terminal-border);
+  border-radius: 5px;
+  padding: 5px 8px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+
+.admin-theme .smtp-host {
+  color: var(--terminal-info);
+  font-weight: bold;
+}
+
+.admin-theme .smtp-user {
+  color: var(--terminal-warning);
+  margin-right: 8px;
+}
+
+.admin-theme .smtp-item .password-display {
+  color: var(--terminal-success);
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+.admin-theme .smtp-info {
+  flex-grow: 1;
+}
+
+.admin-theme .smtp-actions {
+  display: flex;
+  gap: 5px;
+}
+
+/* User Detail Page */
+.admin-theme .user-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-theme .user-detail-header h2 {
+  margin: 0;
+  color: var(--terminal-text);
+}
+
+.admin-theme .user-detail-section {
+  margin-bottom: 30px;
+}
+
+.admin-theme .user-detail-section h3 {
+  color: var(--terminal-text);
+  border-bottom: 1px solid var(--terminal-border);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+/* Live Terminal */
+.admin-theme .live-terminal {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--terminal-border);
+  border-radius: 5px;
+  padding: 10px;
+  height: 400px;
+  overflow-y: auto;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+  position: relative;
+}
+
+.admin-theme .live-terminal-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+}
+
+.admin-theme .terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background-color: var(--terminal-cursor);
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Login Page */
+.admin-theme .login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--terminal-bg);
+}
+
+.admin-theme .login-box {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--terminal-border);
+  border-radius: 5px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.admin-theme .login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.admin-theme .login-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.admin-theme .login-form .form-group {
+  margin-bottom: 20px;
+}
+
+.admin-theme .login-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--terminal-text);
+}
+
+.admin-theme .login-form .btn-login {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .admin-theme .terminal-logs,
+  .admin-theme .live-terminal {
+    height: 300px;
+  }
+  
+  .admin-theme .smtp-item {
+    flex-direction: column;
+  }
+  
+  .admin-theme .smtp-actions {
+    margin-top: 10px;
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+
+/* Enhanced Terminal Modal Controls */
+.admin-theme .btn-terminal-success {
+  background-color: rgba(30, 215, 96, 0.15);
+  border: 1px solid var(--terminal-success);
+  color: var(--terminal-success);
+  text-shadow: 0 0 5px rgba(30, 215, 96, 0.3);
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-theme .btn-terminal-success:hover {
+  background-color: rgba(30, 215, 96, 0.25);
+  box-shadow: 0 0 15px rgba(30, 215, 96, 0.4);
+  transform: translateY(-2px);
+}
+
+.admin-theme .btn-terminal-success:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 5px rgba(30, 215, 96, 0.4);
+}
+
+.admin-theme .btn-terminal-success::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.admin-theme .btn-terminal-success:hover::before {
+  left: 100%;
+}
+
+.admin-theme .btn-terminal-secondary {
+  background-color: rgba(60, 60, 60, 0.2);
+  border: 1px solid #666;
+  color: #ccc;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.admin-theme .btn-terminal-secondary:hover {
+  background-color: rgba(80, 80, 80, 0.3);
+  box-shadow: 0 0 10px rgba(100, 100, 100, 0.3);
+  transform: translateY(-2px);
+}
+
+.admin-theme .btn-terminal-secondary:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 5px rgba(100, 100, 100, 0.3);
+}
+
+.admin-theme .btn-terminal-accent {
+  background-color: rgba(140, 82, 255, 0.15);
+  border: 1px solid var(--terminal-accent);
+  color: var(--terminal-accent);
+  text-shadow: 0 0 5px rgba(140, 82, 255, 0.3);
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.admin-theme .btn-terminal-accent:hover {
+  background-color: rgba(140, 82, 255, 0.25);
+  box-shadow: 0 0 15px rgba(140, 82, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Terminal Checkbox */
+.admin-theme .terminal-form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--terminal-border);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.admin-theme .terminal-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background-color: var(--terminal-bg);
+  border: 1px solid var(--terminal-text);
+  border-radius: 3px;
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.admin-theme .terminal-checkbox:checked {
+  background-color: var(--terminal-text);
+  border-color: var(--terminal-text);
+}
+
+.admin-theme .terminal-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  color: var(--terminal-bg);
+  font-size: 14px;
+  top: -2px;
+  left: 3px;
+}
+
+.admin-theme .terminal-checkbox-label {
+  color: var(--terminal-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Prevent modal from hiding when clicked */
+.admin-theme .modal-dialog {
+  pointer-events: auto;
+}
+
+.admin-theme .terminal-modal {
+  background-color: var(--terminal-bg);
+  border: 1px solid var(--terminal-border);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+/* Table styles */
+.table {
+  color: var(--terminal-text);
+  background-color: var(--terminal-bg-darker);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Email count styles */
+.email-count {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+.download-emails {
+  transition: all 0.2s ease;
+}
+
+.download-emails:hover {
+  transform: scale(1.15);
+}
+
+.admin-theme .terminal-window-content {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+}
+
+.admin-theme .terminal-text {
+  color: var(--terminal-text);
+  font-family: 'Fira Code', 'Courier New', monospace;
+}

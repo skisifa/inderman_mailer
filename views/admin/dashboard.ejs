@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin-theme.css">
+</head>
+<body class="admin-theme">
+  <!-- Header -->
+  <header class="terminal-header">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="terminal-title">
+          <div class="terminal-controls">
+            <span class="control red"></span>
+            <span class="control yellow"></span>
+            <span class="control green"></span>
+          </div>
+          <h1><i class="fas fa-terminal"></i> Inderman Mailer Admin</h1>
+        </div>
+        <div class="terminal-user">
+          Logged in as: <span class="fw-bold"><%= currentUser %></span>
+          <a href="/logout" class="btn btn-sm btn-danger ms-2">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <div class="container terminal-content">
+    <div class="row">
+      <!-- Users Table -->
+      <div class="col-md-8">
+        <div class="terminal-card">
+          <div class="terminal-card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+              <i class="fas fa-users"></i> User Management
+            </h5>
+            <button id="addUserBtn" class="btn btn-sm btn-success">
+              <i class="fas fa-user-plus"></i> Add User
+            </button>
+          </div>
+          <div class="terminal-card-body">
+            <div class="table-responsive">
+              <table class="terminal-table compact">
+                <thead>
+                  <tr>
+                    <th class="col-username">Username</th>
+                    <th class="col-password">Password</th>
+                 
+                    <th class="col-login">Last Login</th>
+                    <th class="col-ip">IP Address</th>
+                    <th class="col-city">City</th>
+                    <th class="col-country">Country</th>
+                    <th class="col-note">Note</th>
+                    <th class="col-emails">Emails</th>
+                    <th class="col-actions">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody">
+                  <% users.forEach(function(user) { %>
+                    <tr data-user-id="<%= user.id %>" class="<%= user.isAdmin ? 'admin-user' : '' %>">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span class="status-indicator <%= user.online ? 'bg-success' : 'bg-danger' %> me-2"></span>
+                          <strong><%= user.username %></strong>
+                          <% if(user.isAdmin) { %>
+                            <span class="badge bg-purple ms-2">Admin</span>
+                          <% } %>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="password-display">
+                          <span class="text-warning fw-bold" style="font-family: monospace; letter-spacing: 0.5px;">
+                            <%= user.password %>
+                          </span>
+                        </div>
+                      </td>
+                      <td><%= user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'Never' %></td>
+                      <td><%= user.lastIP || 'Unknown' %></td>
+                      <td>
+                        <span class="city-name"><%= user.city || 'Unknown' %></span>
+                      </td>
+                      <td>
+                        <% if (user.countryCode) { %>
+                          <img src="https://flagcdn.com/16x12/<%= user.countryCode.toLowerCase() %>.png" 
+                               alt="<%= user.country %>" title="<%= user.country %>" class="me-1">
+                        <% } %>
+                        <%= user.country || 'Unknown' %>
+                      </td>
+                      <td class="note-cell" data-user-id="<%= user.id %>">
+                        <div class="note-display">
+                          <span class="note-text"><%= user.note || '' %></span>
+                          <button class="btn btn-sm edit-note-btn" title="Edit Note">
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                        </div>
+                        <div class="note-edit" style="display: none;">
+                          <div class="input-group input-group-sm">
+                            <input type="text" class="form-control note-input" value="<%= user.note || '' %>">
+                            <button class="btn btn-terminal-success save-note-btn" title="Save">
+                              <i class="fa fa-check"></i>
+                            </button>
+                            <button class="btn btn-terminal-danger cancel-note-btn" title="Cancel">
+                              <i class="fa fa-times"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <% const emailCount = user.emailCache ? user.emailCache.length : 0 %>
+                        <div class="d-flex align-items-center justify-content-center">
+                          <span class="email-count me-2"><%= emailCount %></span>
+                          <% if (emailCount > 0) { %>
+                            <a href="/admin/api/users/<%= user.id %>/emails" class="btn btn-sm btn-terminal-info download-emails" data-id="<%= user.id %>" title="Download & Clear Emails">
+                              <i class="fa fa-download"></i>
+                            </a>
+                          <% } else { %>
+                            <span class="text-muted"><i class="fa fa-inbox"></i></span>
+                          <% } %>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <div class="btn-group">
+                          <button class="btn btn-table-action edit edit-user" data-id="<%= user.id %>" title="Edit User">
+                            <i class="fa fa-edit"></i>
+                          </button>
+                          <button class="btn btn-table-action view-user" data-id="<%= user.id %>" title="View Details">
+                            <i class="fa fa-eye"></i>
+                          </button>
+                          <% if(!user.isAdmin) { %>
+                            <button class="btn btn-table-action delete delete-user" data-id="<%= user.id %>" title="Delete User">
+                              <i class="fa fa-trash"></i>
+                            </button>
+                          <% } %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Terminal Logs -->
+      <div class="col-md-4">
+        <div class="terminal-card">
+          <div class="terminal-card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+              <i class="fas fa-terminal"></i> System Logs
+            </h5>
+            <div>
+              <button id="toggleLogsBtn" class="btn btn-sm btn-warning">
+                <i class="fas fa-pause"></i> Pause Live Logs
+              </button>
+              <button id="clearLogsBtn" class="btn btn-sm btn-danger">
+                <i class="fas fa-trash"></i> Clear
+              </button>
+            </div>
+          </div>
+          <div class="terminal-card-body p-0">
+            <div id="terminal-logs" class="terminal-console">
+              <div class="log-entry log-info">
+                <span class="log-timestamp">[<%= new Date().toLocaleTimeString() %>]</span> Admin panel initialized
+              </div>
+              <div class="log-entry log-info">
+                <span class="log-timestamp">[<%= new Date().toLocaleTimeString() %>]</span> [*] System ready
+              </div>
+              <div class="log-entry log-success">
+                <span class="log-timestamp">[<%= new Date().toLocaleTimeString() %>]</span> [✓] Loaded <%= users.length %> users
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- User Modal -->
+  <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="terminal-modal">
+        <div class="terminal-modal-header">
+          <div class="terminal-controls">
+            <span class="control red" data-bs-dismiss="modal"></span>
+            <span class="control yellow"></span>
+            <span class="control green"></span>
+          </div>
+          <h5 class="modal-title" id="userModalLabel"><i class="fas fa-user-plus"></i> <span class="terminal-text">Add/Edit User</span></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="terminal-modal-body terminal-window-content">
+          <form id="userForm">
+            <input type="hidden" id="userId">
+            
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <div class="terminal-input-group">
+                <span class="terminal-input-prefix">$</span>
+                <input type="text" class="terminal-input" id="username" required>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <div class="terminal-input-group">
+                <span class="terminal-input-prefix">$</span>
+                <input type="password" class="terminal-input" id="password">
+              </div>
+              <small class="text-muted">Leave blank to keep current password (when editing)</small>
+            </div>
+            
+            <div class="mb-3 terminal-form-check">
+              <input type="checkbox" class="terminal-checkbox" id="isAdmin">
+              <label class="terminal-checkbox-label" for="isAdmin"><i class="fas fa-shield-alt"></i> Admin User</label>
+            </div>
+            
+            <div class="mb-3">
+              <label for="userNote" class="form-label">Note</label>
+              <div class="terminal-input-group">
+                <span class="terminal-input-prefix">$</span>
+                <textarea class="terminal-input" id="userNote" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="terminal-modal-footer">
+          <button type="button" class="btn btn-terminal-secondary" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancel</button>
+          <button type="button" class="btn btn-terminal-success" id="saveUserBtn"><i class="fas fa-save"></i> Save User</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
